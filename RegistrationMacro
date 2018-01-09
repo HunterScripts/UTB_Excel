@@ -1,0 +1,22 @@
+Sub SaveTrainee()
+    ThisWorkbook.ActiveSheet.Range("A3:H3").Copy
+    rw = 25
+    rn = 1
+    Do While rn = 1
+        If IsEmpty(Cells(rw, 2)) = True Then
+            rn = 0
+        Else
+            rw = rw + 1
+        End If
+    Loop
+    ThisWorkbook.ActiveSheet.Range(Cells(rw,1), Cells(rw, 8)).PasteSpecial Paste:=xlValues, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+    Range("A3").Value = ""
+    Range("B3").Value =Range("B12").Value
+    Range("C3").Value ="=VLOOKUP(B3,B12:E19,2,FALSE)"
+    Range("D3").Value ="=VLOOKUP(B3,B12:E19,3,FALSE)"
+    Range("E3").Value ="=VLOOKUP(B3,B12:E19,4,FALSE)"
+    Range("F3").Value = ""
+    Range("G3").Value = ""
+    Range("H3").Value = ""
+End Sub
+
