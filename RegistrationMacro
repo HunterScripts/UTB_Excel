@@ -1,22 +1,48 @@
 Sub SaveTrainee()
-    ThisWorkbook.ActiveSheet.Range("A3:H3").Copy
-    rw = 25
+    Dim Name As String
+    Dim Month AsString
+    Dim Srv As String
+    Dim Itm As String
+    Dim Orient As String
+    Dim DDate As String
+    Dim DShift As String
+        
+    Name = ThisWorkbook.ActiveSheet.Range("A3").Value
+    Month = ThisWorkbook.ActiveSheet.Range("B3").Value
+    Srv = ThisWorkbook.ActiveSheet.Range("C3").Value
+    Itm = ThisWorkbook.ActiveSheet.Range("D3").Value
+    Orient = ThisWorkbook.ActiveSheet.Range("E3").Value
+    DDate = ThisWorkbook.ActiveSheet.Range("F3").Value
+    DShift = ThisWorkbook.ActiveSheet.Range("G3").Value
+
+    rw = 25
     rn = 1
     Do While rn = 1
+    
         If IsEmpty(Cells(rw, 2)) = True Then
             rn = 0
         Else
             rw = rw + 1
         End If
     Loop
-    ThisWorkbook.ActiveSheet.Range(Cells(rw,1), Cells(rw, 8)).PasteSpecial Paste:=xlValues, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
-    Range("A3").Value = ""
-    Range("B3").Value =Range("B12").Value
-    Range("C3").Value ="=VLOOKUP(B3,B12:E19,2,FALSE)"
-    Range("D3").Value ="=VLOOKUP(B3,B12:E19,3,FALSE)"
-    Range("E3").Value ="=VLOOKUP(B3,B12:E19,4,FALSE)"
+   
+    ThisWorkbook.ActiveSheet.Cells(rw, 1) = Name
+    ThisWorkbook.ActiveSheet.Cells(rw, 2) = Month
+    ThisWorkbook.ActiveSheet.Cells(rw, 3) = Srv
+    ThisWorkbook.ActiveSheet.Cells(rw, 4) = Itm
+    ThisWorkbook.ActiveSheet.Cells(rw, 5) = Orient
+    ThisWorkbook.ActiveSheet.Cells(rw, 6) = DDate
+    ThisWorkbook.ActiveSheet.Cells(rw, 7) = DShift
+   
+    Range("A3").Value = ""
+    Range("B3").Value = Range("B12").Value
+    Range("C3").Value = "=VLOOKUP(B3,B12:E19,2,FALSE)"
+    Range("D3").Value = "=VLOOKUP(B3,B12:E19,3,FALSE)"
+    Range("E3").Value = "=VLOOKUP(B3,B12:E19,4,FALSE)"
     Range("F3").Value = ""
     Range("G3").Value = ""
-    Range("H3").Value = ""
+
 End Sub
+
+
 
