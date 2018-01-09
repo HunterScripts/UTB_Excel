@@ -1,38 +1,20 @@
 Sub SaveTrainee()
     Dim Name As String
-    Dim Month AsString
+    Dim Mnth As String
     Dim Srv As String
     Dim Itm As String
     Dim Orient As String
-    Dim DDate As String
+    Dim DDate As Date
     Dim DShift As String
+    Dim DDN As Integer
         
-    Name = ThisWorkbook.ActiveSheet.Range("A3").Value
-    Month = ThisWorkbook.ActiveSheet.Range("B3").Value
+    Name = ThisWorkbook.ActiveSheet.Range("A3").Value
+    Mnth = ThisWorkbook.ActiveSheet.Range("B3").Value
     Srv = ThisWorkbook.ActiveSheet.Range("C3").Value
     Itm = ThisWorkbook.ActiveSheet.Range("D3").Value
     Orient = ThisWorkbook.ActiveSheet.Range("E3").Value
     DDate = ThisWorkbook.ActiveSheet.Range("F3").Value
     DShift = ThisWorkbook.ActiveSheet.Range("G3").Value
-
-    rw = 25
-    rn = 1
-    Do While rn = 1
-    
-        If IsEmpty(Cells(rw, 2)) = True Then
-            rn = 0
-        Else
-            rw = rw + 1
-        End If
-    Loop
-   
-    ThisWorkbook.ActiveSheet.Cells(rw, 1) = Name
-    ThisWorkbook.ActiveSheet.Cells(rw, 2) = Month
-    ThisWorkbook.ActiveSheet.Cells(rw, 3) = Srv
-    ThisWorkbook.ActiveSheet.Cells(rw, 4) = Itm
-    ThisWorkbook.ActiveSheet.Cells(rw, 5) = Orient
-    ThisWorkbook.ActiveSheet.Cells(rw, 6) = DDate
-    ThisWorkbook.ActiveSheet.Cells(rw, 7) = DShift
    
     Range("A3").Value = ""
     Range("B3").Value = Range("B12").Value
@@ -42,7 +24,86 @@ Sub SaveTrainee()
     Range("F3").Value = ""
     Range("G3").Value = ""
 
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+    Worksheets("Schedule").Activate
+
+    Dim rw As Integer
+    Dim cl As Integer
+    Dim rn As Integer
+
+    DDN = Month(DDate)
+
+    Set SrvLoc = Range("B3:O121").Find(What:=Srv)
+    Set ItmLoc = Range("B3:O121").Find(What:=Itm)
+    Set OriLoc = Range("B3:O121").Find(What:=Orient)
+    Set MonLoc = Range("A1:A121").Find(What:=MonthName(DDN))
+
+    Do While MonLoc Is Nothing
+        DDN = DDN - 1
+        Set MonLoc = Range("A1:A121").Find(What:=MonthName(DDN))
+    Loop
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+    rn = 1
+    rw = SrvLoc.Row + 1
+    cl = SrvLoc.Column + 1
+
+    Do While rn = 1
+        If IsEmpty(Cells(rw, cl)) = True Then
+            rn = 0
+        Else
+            rw = rw + 1
+        End If
+    Loop
+    ThisWorkbook.ActiveSheet.Cells(rw, cl) = Name
+
+'''''''''''''''''''''''''''''''''''''
+
+    rn = 1
+    rw = ItmLoc.Row + 1
+    cl = ItmLoc.Column + 1
+
+    Do While rn = 1
+        If IsEmpty(Cells(rw, cl)) = True Then
+            rn = 0
+        Else
+            rw = rw + 1
+        End If
+    Loop
+    ThisWorkbook.ActiveSheet.Cells(rw, cl) = Name
+ 
+'''''''''''''''''''''''''''''''''''''
+
+    rn = 1
+    rw = OriLoc.Row + 1
+    cl = OriLoc.Column + 1
+
+    Do While rn = 1
+        If IsEmpty(Cells(rw, cl)) = True Then
+            rn = 0
+        Else
+            rw = rw + 1
+        End If
+    Loop
+    ThisWorkbook.ActiveSheet.Cells(rw, cl) = Name
+
+'''''''''''''''''''''''''''''''''''''
+ 
+    rn = 1
+    rw = MonLoc.Row + 2
+    cl = 9
+
+    Do While rn = 1
+        If IsEmpty(Cells(rw, cl)) = True Then
+            rn = 0
+        Else
+            rw = rw + 1
+        End If
+    Loop
+    ThisWorkbook.ActiveSheet.Cells(rw, cl) = Name
+    ThisWorkbook.ActiveSheet.Cells(rw, cl + 1) = DDate
+    ThisWorkbook.ActiveSheet.Cells(rw, cl + 2) = DShift
+ 
 End Sub
-
-
-
